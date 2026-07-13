@@ -35,4 +35,8 @@
     Подходит для покупки квартиры, дома, комнаты.\n\n
     После последнего платежа залог снимается, недвижимость полностью ваша.
 </string>
+    <string name="in_journal">В журнал</string>
+    <string name="enter_sum">Введите сумму</string>
+    <string name="hold_to_edit">💡 Удерживайте кнопки для изменения настроек</string>
+    <string name="enter_summ">Введите сумму</string>
 </resources>

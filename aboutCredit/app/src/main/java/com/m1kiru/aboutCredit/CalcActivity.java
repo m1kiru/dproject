@@ -85,7 +85,7 @@ public class CalcActivity extends AppCompatActivity {
         btnCredit.setOnLongClickListener(settingsListener);
         btnMicro.setOnLongClickListener(settingsListener);
         btnMortgage.setOnLongClickListener(settingsListener);
-        Button btnJournal = findViewById(R.id.btn_journal); // добавьте в layout
+        Button btnJournal = findViewById(R.id.btn_journal);
         btnJournal.setOnClickListener(v -> {
             Intent intent = new Intent(CalcActivity.this, JournalActivity.class);
             startActivity(intent);
@@ -138,7 +138,6 @@ public class CalcActivity extends AppCompatActivity {
         TextView labelExtra1 = dialogView.findViewById(R.id.label_extra1);
         TextView labelExtra2 = dialogView.findViewById(R.id.label_extra2);
 
-        // Заполняем текущими значениями в зависимости от типа
         if (btnId == R.id.b1_calc) {
             builder.setTitle("⚙️ Настройки кредита");
             editRate.setText(String.valueOf(creditRate));
@@ -213,7 +212,6 @@ public class CalcActivity extends AppCompatActivity {
                     if (editExtra2.getVisibility() == View.VISIBLE) {
                         microFee = Double.parseDouble(editExtra2.getText().toString());
                     }
-                    // microTermInDays уже установлен через RadioGroup
                 } else {
                     mortgageRate = rate;
                     mortgageTerm = term;
@@ -267,7 +265,7 @@ public class CalcActivity extends AppCompatActivity {
             title = "🏠 ИПОТЕКА";
         }
 
-        // Формируем отображение срока
+        // отображение срока
         String termDisplay;
         if (buttonId == R.id.b2_calc) {
             if (microTermInDays) {
@@ -280,7 +278,7 @@ public class CalcActivity extends AppCompatActivity {
             termDisplay = String.format(Locale.getDefault(), "%d мес.", calc.getTermMonths());
         }
 
-        // Основной результат
+        // результат
         StringBuilder result = new StringBuilder();
         result.append(String.format(Locale.getDefault(),
                 "%s\n" +
@@ -295,7 +293,6 @@ public class CalcActivity extends AppCompatActivity {
                 termDisplay
         ));
 
-        // Для микрозайма добавляем ежедневный платёж
         if (buttonId == R.id.b2_calc) {
             double dailyPayment = calc.getDailyPayment();
             double totalPaymentDaily = dailyPayment * (microTermInDays ? microTerm : microTerm * 30) + microFee;
@@ -312,11 +309,10 @@ public class CalcActivity extends AppCompatActivity {
 
         output.setText(result.toString());
 
-        // 🔥 СОХРАНЯЕМ В ЖУРНАЛ
+        // сохранение
         String journalTerm = termDisplay;
         String journalType = title;
 
-        // Для микрозайма добавляем информацию о дневном платеже в тип
         if (buttonId == R.id.b2_calc) {
             double dailyPayment = calc.getDailyPayment();
             journalType = String.format(Locale.getDefault(), "%s (день: %,.0f ₽)",
@@ -343,7 +339,6 @@ public class CalcActivity extends AppCompatActivity {
             return calc;
         }
         else if (btnId == R.id.b2_calc) {
-            // Конвертируем в месяцы если нужно
             int termInMonths = microTermInDays ? microTerm : microTerm * 30;
 
             CreditCalculator micro = new CreditCalculator(principal, 0, termInMonths,
